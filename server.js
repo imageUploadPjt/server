@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage});
 
 const app = express();
-const PORT = 5050;
+const PORT = 5555;
 
 app.post("/upload", upload.single("image"), (req, res) => {
     console.log("/upload called!");
