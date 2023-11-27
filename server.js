@@ -29,11 +29,16 @@ const PORT = 5000;
 
 console.log(process.env)
 
-mongoose.connect(
-        process.env.MONGO_URI,
-    )
+mongoose
+    .connect(
+        process.env.MONGO_URI, {
+            useCreateIndex:true,
+            useNewUrlParser:true,
+            useUnifiedTopology:true,
+        })
     .then(()=>{
         console.log("MongoDB Connected")
+        app.use("/uploads", express.static("uploads"));
         
         app.post("/upload", upload.single("image"), async (req, res) => {
             console.log("/upload called!");
