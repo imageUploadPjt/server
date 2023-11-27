@@ -32,7 +32,6 @@ console.log(process.env)
 mongoose
     .connect(
         process.env.MONGO_URI, {
-            useCreateIndex:true,
             useNewUrlParser:true,
             useUnifiedTopology:true,
         })
@@ -40,18 +39,25 @@ mongoose
         console.log("MongoDB Connected")
         app.use("/uploads", express.static("uploads"));
         
-        app.post("/upload", upload.single("image"), async (req, res) => {
+        app.post("/images", upload.single("image"), async (req, res) => {
             console.log("/upload called!");
-            await new Image({
+            const image = await new Image({
                 key:req.file.filename, 
                 originalFileName:req.file.originalname
             }).save();
             console.log(req.file)
-            res.json(req.file);
+            res.json(image);
         });
+
+        app.get("/images", async(req,res) => {
+            const images = await Image.find();
+            res.json(images);
+        })
         
         app.listen(PORT, () => console.log("Express server listening on PORT " + PORT));
     
     })
     .catch((err) => console.log(err));
+
+
 
