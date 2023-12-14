@@ -34,6 +34,7 @@ mongoose
         process.env.MONGO_URI, {
             useNewUrlParser:true,
             useUnifiedTopology:true,
+            dbName:'nodejs'
         })
     .then(()=>{
         console.log("MongoDB Connected")
